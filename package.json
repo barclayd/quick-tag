@@ -13,8 +13,14 @@
     "prettier": "prettier --loglevel warn --write '**/*.{js,json,md,ts}'",
     "npx-publish": "scripts/publish.sh"
   },
+  "dependencies": {
+    "inquirer": "^7.3.3",
+    "shelljs": "^0.8.4"
+  },
   "devDependencies": {
+    "@types/inquirer": "^7.3.1",
     "@types/node": "^14.14.16",
+    "@types/shelljs": "^0.8.8",
     "@typescript-eslint/eslint-plugin": "^4.11.1",
     "@typescript-eslint/parser": "^4.11.1",
     "eslint": "^7.16.0",
