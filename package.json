@@ -33,5 +33,16 @@
   },
   "_moduleAliases": {
     "@": "dist"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barclayd/quick-tag.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/barclayd/quick-tag/issues"
+  },
+  "homepage": "https://github.com/barclayd/quick-tag#readme"
 }
