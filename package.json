@@ -1,7 +1,7 @@
 {
   "name": "quick-tag",
   "description": "Node CLI for quickly tagging releases for git, available via npx",
-  "version": "0.1.1-canary.5",
+  "version": "1.0.0",
   "main": "index.js",
   "bin": "index.js",
   "scripts": {
