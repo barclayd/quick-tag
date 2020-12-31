@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 import moduleAlias from 'module-alias';
-if (process.env.NODE_ENV !== 'development') {
-  moduleAlias();
-}
+moduleAlias();
 import { readdirSync, readFileSync } from 'fs';
 import { PackageJson, ReleaseAnswer } from '@/types';
 import inquirer from 'inquirer';
@@ -13,7 +11,7 @@ const isPackageJsonInCwd = () =>
 
 const LAST_COMMIT_MESSAGE = `git reflog -1 | sed 's/^.*: //'`;
 
-const blueStdout = (output: string) => `echo -e "\\033[34m${output}\\033[m"`;
+const blueStdout = (output: string) => `echo "\\033[34m${output}\\033[m"`;
 
 const packageJson = (): PackageJson | undefined => {
   try {
