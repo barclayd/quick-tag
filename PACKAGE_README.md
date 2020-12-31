@@ -1,18 +1,11 @@
-# TypeScript Scaffold
-
-Node.js CLI for generating an opinionated TypeScript setup for a range of frameworks
+# Quick Tag
 
 ```shell
-npx typescript-scaffold
+npx quick-tag
 ```
 
-Supports:
+Node CLI for quickly tagging releases and pushing them to GitHub.
 
-- Node
-- React
-- Next
-- Electron
+Quick tag uses your package.json version number and last commit message as defaults to allow for tags to be pushed quickly and easily.
 
-It automatically configures TypeScript, ESLint, Prettier, providing a `tsconfig.json` with `tsconfig-paths` configured out of the box.
-
-Suitable for use in an empty project or one that has already been configured.
+Both can also be customised by the user to perfect the version and message for the release.
