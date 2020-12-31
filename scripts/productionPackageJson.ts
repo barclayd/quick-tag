@@ -44,7 +44,7 @@ const productionPackageJson = {
   bin,
   scripts: pruneScripts(),
   dependencies,
-  _moduleAlias: formatModuleAliasKeys(),
+  _moduleAliases: formatModuleAliasKeys(),
 };
 
 (async () => {
