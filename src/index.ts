@@ -2,14 +2,14 @@
 import moduleAlias from 'module-alias';
 moduleAlias();
 import { readdirSync, readFileSync } from 'fs';
-import { PackageJson, ReleaseAnswer } from '@/types';
+import { CustomMessageAnswer, PackageJson, ReleaseAnswer } from '@/types';
 import inquirer from 'inquirer';
 import { ScriptService } from '@/services/ScriptService';
 
 const isPackageJsonInCwd = () =>
   readdirSync(process.cwd()).includes('package.json');
 
-const LAST_COMMIT_MESSAGE = `git reflog -1 | sed 's/^.*: //'`;
+const LAST_TEN_COMMIT_MESSAGES = `git log -15 --oneline --format=%s | sed 's/^.*: //'`;
 
 const blueStdout = (output: string) => `echo "\\033[34m${output}\\033[m"`;
 
@@ -32,15 +32,22 @@ const gitTag = ({ message, version }: ReleaseAnswer) => {
   ScriptService.run(blueStdout('Release published!'));
 };
 
+const customMessageOption = '~~ write custom message ~~';
+
 (async () => {
   let version: string | undefined;
   if (isPackageJsonInCwd()) {
     version = packageJson()?.version;
   }
   const { stdout: commitMessage } = ScriptService.runSilent(
-    LAST_COMMIT_MESSAGE,
+    LAST_TEN_COMMIT_MESSAGES,
   );
-  const formattedCommitMessage = commitMessage.replace(/(\r\n|\n|\r)/gm, '');
+  const formattedCommitMessages = commitMessage
+    .replace(/(\r\n|\n|\r)/gm, '|')
+    .split('|')
+    .map((message) => message.trim())
+    .filter((message) => message.length > 0);
+  formattedCommitMessages.unshift(customMessageOption);
   const answer = await inquirer.prompt<ReleaseAnswer>([
     {
       type: 'input',
@@ -49,11 +56,22 @@ const gitTag = ({ message, version }: ReleaseAnswer) => {
       default: () => version,
     },
     {
-      type: 'input',
+      type: 'list',
       message: 'Release message',
       name: 'message',
-      default: () => formattedCommitMessage,
+      choices: formattedCommitMessages,
     },
   ]);
+  if (answer.message === customMessageOption) {
+    const { customMessage } = await inquirer.prompt<CustomMessageAnswer>([
+      {
+        type: 'input',
+        message: 'Custom release message',
+        name: 'customMessage',
+        default: () => formattedCommitMessages[1],
+      },
+    ]);
+    answer.message = customMessage;
+  }
   gitTag(answer);
 })();
