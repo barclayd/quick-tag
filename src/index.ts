@@ -9,7 +9,8 @@ import { ScriptService } from '@/services/ScriptService';
 const isPackageJsonInCwd = () =>
   readdirSync(process.cwd()).includes('package.json');
 
-const LAST_TEN_COMMIT_MESSAGES = `git log -15 --oneline --format=%s | sed 's/^.*: //'`;
+const LAST_TEN_COMMIT_MESSAGES =
+  "git log -15 --oneline --format=%s | sed 's/^.*: //'";
 
 const blueStdout = (output: string) => `echo "\\033[34m${output}\\033[m"`;
 
